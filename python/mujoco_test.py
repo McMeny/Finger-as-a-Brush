@@ -1,11 +1,9 @@
-import os
-import subprocess
+
 import mujoco.viewer
 
 import matplotlib.pyplot as plt
 # Other imports and helper functions
 import time
-import itertools
 import numpy as np
 
 # More legible printing from numpy.
@@ -31,7 +29,6 @@ xml = """
 """
 
 # Make model and data_m
-
 model = mujoco.MjModel.from_xml_string(xml)
 data_m = mujoco.MjData(model)
 
@@ -49,7 +46,6 @@ def add_disc(scene, pos, radius, rgba):
                       np.array(pos, dtype = float),
                       np.eye(3).flatten(),
                       rgba.astype(np.float32))
-  
   
 def add_visual_capsule(scene, point1, point2, radius, rgba):
   if scene.ngeom >= scene.maxgeom:
@@ -86,32 +82,3 @@ def modify_scene(scn, pts, stroke_starts):
 
 mujoco.mj_resetData(model, data_m)
 mujoco.mj_forward(model, data_m)
-    
-if __name__ == "__main__":
-  points = []
-  stroke_starts = set()
-  
-  with mujoco.viewer.launch_passive(model, data_m) as viewer:
-    while viewer.is_running():
-      t = time.time()
-      
-      # make point from t: 0.3 * np.cost(t), 0.3 * np.sin(t), 0.005
-      # this is recalculated and gives a new position each time since 
-      # it is recalculated on every pass of the loop.
-      
-      point = [0.3 * np.cos(t), 0.3 * np.sin(t), .001]
-      
-      # moves sphere to that point
-      
-      data_m.mocap_pos[0] = point
-      
-      points.append(point)
-      modify_scene(viewer.user_scn, points, stroke_starts)
-      
-      mujoco.mj_forward(model, data_m)
-      
-      
-      viewer.sync()
-      time.sleep(0.01)
-    
-

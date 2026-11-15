@@ -1,3 +1,5 @@
+// for testing i2c connection
+
 #include <Wire.h> // The I2C library; the 2 wire protocol (SDA & SDL) your ESP32 uses to talk to the BNO085.
 #include <Arduino.h>
 

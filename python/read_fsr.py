@@ -1,3 +1,4 @@
+# for testing if fsr works
 import serial
 
 ser = serial.Serial("COM15", 115200, timeout = 1)
