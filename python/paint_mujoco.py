@@ -16,8 +16,6 @@ import serial
 
 ser = serial.Serial("COM15", 115200, timeout = 0.05)
 
-
-
 d = cv2.aruco.getPredefinedDictionary(cv2.aruco.DICT_4X4_50)
 
 data = np.load("calibration.npz")
